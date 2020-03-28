@@ -56,7 +56,7 @@ class ADM1176:
         with self.i2c_device as i2c:
             i2c.readinto(self._BUFFER)
         raw_voltage = ((self._BUFFER[0]<<8) | (self._BUFFER[2]&DATA_V_MASK))>>4
-        raw_current = (self._BUFFER[1]<<8) | (self._BUFFER[2]&DATA_I_MASK)
+        raw_current = (self._BUFFER[1]<<4) | (self._BUFFER[2]&DATA_I_MASK)
         _voltage = (26.35/4096)*raw_voltage # volts
         _current = ((0.10584/4096)*raw_current)/self.sense_resistor # amperes
         return (_voltage,_current)
